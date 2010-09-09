@@ -1,0 +1,10 @@
+0:0:0:0:0:0:0:1%0 -  -  [06/Sep/2010:19:41:08 +0000] "GET /windycityrails-dojo-chat-server/ HTTP/1.1" 200 6297 
+0:0:0:0:0:0:0:1%0 -  -  [06/Sep/2010:19:41:08 +0000] "GET /windycityrails-dojo-chat-server/images/rails.png HTTP/1.1" 304 0 
+0:0:0:0:0:0:0:1%0 -  -  [06/Sep/2010:19:41:08 +0000] "GET /favicon.ico HTTP/1.1" 200 717 
+0:0:0:0:0:0:0:1%0 -  -  [06/Sep/2010:19:42:59 +0000] "GET /windycityrails-dojo-chat-server HTTP/1.1" 302 0 
+0:0:0:0:0:0:0:1%0 -  -  [06/Sep/2010:19:43:01 +0000] "GET /windycityrails-dojo-chat-server/ HTTP/1.1" 200 6297 
+0:0:0:0:0:0:0:1%0 -  -  [06/Sep/2010:19:43:01 +0000] "GET /windycityrails-dojo-chat-server/images/rails.png HTTP/1.1" 304 0 
+0:0:0:0:0:0:0:1%0 -  -  [06/Sep/2010:19:43:01 +0000] "GET /favicon.ico HTTP/1.1" 200 717 
+0:0:0:0:0:0:0:1%0 -  -  [06/Sep/2010:19:43:01 +0000] "GET /windycityrails-dojo-chat-server/ HTTP/1.1" 200 6297 
+0:0:0:0:0:0:0:1%0 -  -  [06/Sep/2010:19:43:01 +0000] "GET /windycityrails-dojo-chat-server/images/rails.png HTTP/1.1" 304 0 
+0:0:0:0:0:0:0:1%0 -  -  [06/Sep/2010:19:43:01 +0000] "GET /favicon.ico HTTP/1.1" 200 717 

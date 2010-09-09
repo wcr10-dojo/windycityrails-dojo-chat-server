@@ -1,7 +1,7 @@
 class RedisController < ApplicationController
+
   def index
-    @@redis ||= Redis.new
-    args = params[:args] || ""
-    render :text => @@redis.send(params[:command], *args.split(' ')).inspect
+    args = params[:redis_args].split('/') || []
+    render :text => RedisClient.redis.send(args[0], *args[1..-1]).inspect
   end
 end

@@ -1,0 +1,15 @@
+<div style="display:none" id="username"><b><%=cookies[:username]%></b> </div>
+<div style="display:none" id="last_sync"><%= Time.now.to_f * 1000 %></div>
+<div class="outer_container">
+  <div class="chat_container">
+    <div class="chat_input_container">
+      <input type="text" />
+    </div>
+    <div class="chat_window">
+      <% @recent_messages.each do |message| %>
+        <p><b><%=message[0]%></b> <%=message[1]%></p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
