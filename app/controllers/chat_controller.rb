@@ -1,5 +1,6 @@
 class ChatController < ApplicationController
   before_filter :check_cookie, :only => [:index]
+  skip_before_filter :verify_authenticity_token, :only => :push
 
   def index
     @recent_messages = (RedisClient.redis.zrevrange("room:default", 0, 30) || []).map {|m| m.split('^')}
@@ -13,16 +14,21 @@ class ChatController < ApplicationController
 
   def push
     user = cookies[:username] || params[:username] || "Anon"
-    message = user + "^" + params[:message]
-    RedisClient.redis.zadd("room:default", Time.now.to_f * 1000, message)
+    message_json = {:username => user, :message => params[:message]}.to_json
+    RedisClient.redis.zadd("room:default", Time.now.to_f * 1000, message_json)
 
     render :nothing => true
   end
 
   def pull
-   delta = RedisClient.redis.zrangebyscore 'room:default', params[:last_sync].to_f + 0.01, '+inf' 
-   messages = (delta || []).map { |message| message.split('^') }
-   render :json => {:time => Time.now.to_f * 1000, :delta => messages}
+    messages = if params[:last_sync].to_i == 0
+      []
+    else
+      delta = RedisClient.redis.zrangebyscore 'room:default', params[:last_sync].to_f + 0.01, '+inf' 
+      delta.map { |message_json| ActiveSupport::JSON.decode(message_json) }
+    end
+    
+    render :json => {:time => Time.now.to_f * 1000, :delta => messages}
   end
 
   protected

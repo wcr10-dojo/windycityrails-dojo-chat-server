@@ -22,7 +22,7 @@
       $('#last_sync').text(data['time']);
       $(data['delta']).each(function() {
         var message = this;
-        var chatMessage = "<b>" + message[0] + "</b> " + message[1];
+        var chatMessage = "<b>" + message["username"] + "</b> " + message["message"];
         var chatElement = $('<p>' + chatMessage + '</p>');
         $('div.chat_window').prepend(chatElement);
       });
