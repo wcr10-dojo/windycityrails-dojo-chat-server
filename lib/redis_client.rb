@@ -1,7 +1,7 @@
 module RedisClient
   def self.redis=(redis_connection)
     @redis = case redis_connection
-             when Redis
+             when Redis, FakeRedis
                redis_connection
              when String
                Redis.new(redis_connection)
