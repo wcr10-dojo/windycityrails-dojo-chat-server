@@ -15,6 +15,7 @@ describe "a fake redis implementaiton for testing" do
 
     @fake_redis.zrangebyscore("k", 2, 3).should == ["b", "c"]
     @fake_redis.zrangebyscore("k", 2, "+inf").should == ["b", "c"]
+    @fake_redis.zrangebyscore("k", "-inf", "+inf").should == ["a", "b", "c"]
   end
 
 end

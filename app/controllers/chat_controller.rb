@@ -1,5 +1,5 @@
 class ChatController < ApplicationController
-  before_filter :check_cookie, :except => [:sign_in_form, :sign_in]
+  before_filter :check_cookie, :only => [:index]
 
   def index
     @recent_messages = (RedisClient.redis.zrevrange("room:default", 0, 30) || []).map {|m| m.split('^')}
@@ -12,7 +12,8 @@ class ChatController < ApplicationController
   end
 
   def push
-    message = cookies[:username] + "^" + params[:message]
+    user = cookies[:username] || params[:username] || "Anon"
+    message = user + "^" + params[:message]
     RedisClient.redis.zadd("room:default", Time.now.to_f * 1000, message)
 
     render :nothing => true
