@@ -27,6 +27,18 @@ class FakeRedis
     range = (start_score .. end_score)
     zvalues zsort(key).select{|s, v| range.include?(s)}
   end
+  
+  def get(key)
+    @data[key]
+  end
+  
+  def set(key, value)
+    @data[key] = value
+  end
+  
+  def flushall
+    @data = {}
+  end
 
   protected
   Infinity = 1.0/0

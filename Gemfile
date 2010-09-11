@@ -13,3 +13,9 @@ group :bot do
   gem "httparty"
   gem "nokogiri"
 end
+
+#uncomment for twitter bot...weird
+#group :twitter_bot do 
+#  gem "tweetstream"
+#  gem "json"
+#end
