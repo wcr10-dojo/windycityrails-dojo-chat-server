@@ -1,4 +1,9 @@
 class Message
+  
+  PROCESSORS = %w(image youtube)
+  
+  attr_accessor :message
+  
   def self.sanitize!(text)
     HTML::WhiteListSanitizer.new.sanitize(text)
   end
@@ -14,9 +19,10 @@ class Message
   end
 
   def initialize(user, email, message)
+    @message = parse(message)
     message_json = {
       :username => user,
-      :message => parse(message),
+      :message => @message,
       :time_stamp => time_stamp,
       :email => email}.to_json
     RedisClient.redis.zadd("room:default", time_stamp, message_json)
@@ -29,17 +35,8 @@ class Message
   private
 
   def parse(message)
-    @message = message
-    add_image_tag
-    @message
+    PROCESSORS.inject(message){|message, processor| "#{processor.capitalize}".constantize.process(message) || message }
   end
-
-  def add_image_tag
-    return unless @message =~ /^http:\/\/.+\.(png|jpg|jpeg|gif)$/i 
-
-    @message = %Q|<img src="#{@message}" />|
-  end
-
 
   def time_stamp
     Time.now.to_f * 1000
