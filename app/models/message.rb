@@ -1,5 +1,4 @@
 class Message
-
   def self.sanitize!(text)
     HTML::WhiteListSanitizer.new.sanitize(text)
   end
@@ -15,6 +14,10 @@ class Message
       :time_stamp => time_stamp,
       :email => email}.to_json
     RedisClient.redis.zadd("room:default", time_stamp, message_json)
+  end
+  
+  def text
+    @message
   end
 
   private
