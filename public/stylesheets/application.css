@@ -38,6 +38,7 @@ div.chat_container {
   border: 20px solid #77BED2;
   font-family: Helvetica Neue, Arial, sans-serif;
   color: #444;
+  min-width:480px;
 }
 
 
