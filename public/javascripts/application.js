@@ -24,7 +24,7 @@
       $(data['delta']).each(function() {
         var message = this;
 		console.log(message);
-        var chatMessage = "<img src=\"" + message["gravatar_url"] + "\" class=\"gravatar\" /><b>" + message["username"] + "</b> " + message["message"];
+        var chatMessage = "<img src=\"" + message["gravatar_url"] + "\" class=\"gravatar\" /><b>(" + message["posted_at"] + ") " + message["username"] + "</b> " + message["message"];
         var chatElement = $('<p>' + chatMessage + '</p>');
         if(! WCR.odd) {
           chatElement.addClass("odd");
