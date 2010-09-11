@@ -24,17 +24,7 @@
       </div>
     </div>
     <div class="chat_window">
-      <% @recent_messages.each do |message| %>
-        <div class="chat_message clearfix <%= cycle('','odd') %>">
-          <span class="identity">
-            <%= image_tag gravatar_url(message["email"] || ""), :class => "gravatar" %>
-          </span>
-          <span class="message">
-            (<%= message["posted_at"] %>) <b class="username"><%= message["username"]%></b>
-            <%= sanitize message["message"], :tags => 'img' %>
-          </span>
-        </div>
-      <% end %>
+		<%= render :partial => 'message', :collection => @recent_messages %>
     </div>
   </div>
 </div>

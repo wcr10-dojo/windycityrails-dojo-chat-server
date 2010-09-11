@@ -26,13 +26,22 @@ end
 class BashBot
   include HTTParty
   headers 'Accept' => '*/*'
-  
+    
   attr_accessor :username, :last_updated, :options
   
   def initialize(username, options = {})
     self.username = username
     self.last_updated = 0
     self.options = options
+  end
+  
+  def domain
+    case self.class.env
+    when "dev"
+      "http://localhost:3000"
+    when "prod"
+      "http://dojo-chat.local"
+    end
   end
   
   def run
@@ -53,14 +62,22 @@ class BashBot
   end
   
   def pull
-    payload = self.class.get("http://localhost:3000/chat/pull/#{last_updated}")
+    payload = self.class.get(domain + "/chat/pull/#{last_updated}")
     self.last_updated = payload["time"]
     payload["delta"]
   end
   
   def push(message)
     push_attrs = {:username => username, :message => message}    
-    self.class.post("http://localhost:3000/chat/push", {:body => push_attrs})
+    self.class.post(domain + "/chat/push", {:body => push_attrs})
+  end
+  
+  def self.env=(env="dev")
+    @env = env || "dev"
+  end
+  
+  def self.env
+    @env
   end
   
   def self.run!(username, options = {})
@@ -70,5 +87,6 @@ class BashBot
 end
 
 if __FILE__ == $0
+  BashBot.env = ARGV[0]
   BashBot.run!("Bash.org")
 end

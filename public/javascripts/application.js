@@ -46,7 +46,7 @@
         }
           
         $('div.chat_window').prepend(chatElement);
-        $(window).scrollTo(0);
+        // $(window).scrollTo(0);
       });
       setTimeout(poll, 500);
     });
