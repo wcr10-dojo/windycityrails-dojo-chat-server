@@ -14,8 +14,9 @@ class ChatController < ApplicationController
 
   def push
     user = cookies[:username] || params[:username] || "Anon"
-    message_json = {:username => user, :message => params[:message]}.to_json
-    RedisClient.redis.zadd("room:default", Time.now.to_f * 1000, message_json)
+    time_stamp = Time.now.to_f * 1000
+    message_json = {:username => user, :message => params[:message], :time_stamp => time_stamp}.to_json
+    RedisClient.redis.zadd("room:default", time_stamp, message_json)
 
     render :nothing => true
   end

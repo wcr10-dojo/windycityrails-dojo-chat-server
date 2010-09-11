@@ -17,5 +17,12 @@ describe "a fake redis implementaiton for testing" do
     @fake_redis.zrangebyscore("k", 2, "+inf").should == ["b", "c"]
     @fake_redis.zrangebyscore("k", "-inf", "+inf").should == ["a", "b", "c"]
   end
+  
+  it "enforces unique keys in sorted sets" do 
+     @fake_redis.zadd("key", 2, "a_value")
+     @fake_redis.zadd("key", 2, "a_value")
+     
+     @fake_redis.zrange("key", 0, -1).should == ["a_value"]
+  end
 
 end

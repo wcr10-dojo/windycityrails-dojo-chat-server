@@ -36,6 +36,6 @@ class FakeRedis
   end
 
   def zvalues(raw)
-    raw.map{|s, v| v}
+    raw.map{|s, v| v}.uniq
   end
 end

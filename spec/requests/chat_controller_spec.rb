@@ -17,11 +17,21 @@ describe "chat interactions" do
       response.should be_success
       response.should have_selector("div.chat_window")
     end
-
+    
     it "pushes & pulls a chat message" do 
       post "/chat/push", :message => "Hello"
       get "/chat/pull/1"
+
       response.should contain("Hello")
+    end
+
+    it "allows multiple messages with the same content from the same user" do 
+      post "/chat/push", :message => "Hello"
+      post "/chat/push", :message => "Hello"
+      get "/chat/pull/1"
+
+      json = ActiveSupport::JSON.decode(response.body)
+      json["delta"].size.should == 2
     end
   end
 end
