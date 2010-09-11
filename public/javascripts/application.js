@@ -24,7 +24,8 @@
       $(data['delta']).each(function() {
         var message = this;
 		console.log(message);
-        var chatMessageTemplate = '<div class="chat_message clearfix"><span class="identity"><img src="{{gravatar_url}}" /></span><span class="message"><b class="username">{{username}}</b> {{message}}</span></div>';
+        var chatMessageTemplate = '<div class="chat_message clearfix"><span class="identity"><img src="{{gravatar_url}}" /></span><span class="message"><b class="username">{{username}}</b> {{{message}}}</span></div>';
+
         //var chatMessage = "<img src=\"" + message["gravatar_url"] + "\" class=\"gravatar\" /><b>" + message["username"] + "</b> " + message["message"];
         var chatMessage = Mustache.to_html(chatMessageTemplate, message);
         var chatElement = $(chatMessage);
