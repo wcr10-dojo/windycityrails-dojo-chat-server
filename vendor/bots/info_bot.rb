@@ -1,12 +1,6 @@
-require File.expand_path('../../../config/boot', __FILE__)
-Bundler.require(:bot) if defined?(Bundler)
+require File.expand_path("../bot_base", __FILE__)
 
-class InfoBot
-  include HTTParty
-  headers 'Accept' => '*/*'
-  
-  attr_accessor :username, :last_updated, :options
-  
+class InfoBot < BotBase
   TALKS = {
     (Time.parse("2010-09-11 10:00:00AM")..Time.parse("2010-09-11 10:45:00AM")) => "Analyzing and Improving the Performance of your Rails Application with John McCaffrey",
     (Time.parse("2010-09-11 11:00:00AM")..Time.parse("2010-09-11 11:45:00AM")) => "It’s Time to Repay Your Debt with Kevin Gisi, Intridea",
@@ -49,43 +43,18 @@ class InfoBot
     end
   end
   
-  def initialize(username, options = {})
-    self.username = username
-    self.last_updated = 0
-    self.options = options
-  end
-  
-  def run
-    while true
-      new_messages = pull
-      new_messages.each do |message|
-        message_user = message["username"]
-        message_text = message["message"]
-        
-        puts "InfoBot got: #{message_text}"
-        if msg_for_infobot?(message_text)
-          push_current_talk
-        end
-        
+  def respond
+    new_messages = pull
+    new_messages.each do |message|
+      message_user = message["username"]
+      message_text = message["message"]
+      
+      puts "InfoBot got: #{message_text}"
+      if msg_for_infobot?(message_text)
+        push_current_talk
       end
-      sleep 0.5
+      
     end
-  end
-  
-  def pull
-    payload = self.class.get("http://localhost:3000/chat/pull/#{last_updated}")
-    self.last_updated = payload["time"]
-    payload["delta"]
-  end
-  
-  def push(message)
-    push_attrs = {:username => username, :message => message}    
-    self.class.post("http://localhost:3000/chat/push", {:body => push_attrs})
-  end
-  
-  def self.run!(username, options = {})
-    bot = self.new(username, options)
-    bot.run
   end
   
 end
