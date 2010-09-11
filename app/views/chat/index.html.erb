@@ -8,7 +8,10 @@
     <div class="chat_window">
       <% @recent_messages.each do |message| %>
         <%p_clazz = cycle('', 'odd') %>
-        <p class="<%=p_clazz%>"><b><%=message["username"]%></b> <%=message["message"]%></p>
+        <p class="<%=p_clazz%>">
+			<%= image_tag gravatar_url(message["email"] || "") %>
+			<b><%=message["username"]%></b> <%=message["message"]%>
+		</p>
       <% end %>
     </div>
   </div>

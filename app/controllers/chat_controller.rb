@@ -8,6 +8,7 @@ class ChatController < ApplicationController
 
   def sign_in
     cookies[:username] = params[:username]
+    cookies[:email]    = params[:email]
     #TODO: need to store this in redis
     redirect_to :action => :index
   end
@@ -15,7 +16,7 @@ class ChatController < ApplicationController
   def push
     user = cookies[:username] || params[:username] || "Anon"
     time_stamp = Time.now.to_f * 1000
-    message_json = {:username => user, :message => params[:message], :time_stamp => time_stamp}.to_json
+    message_json = {:username => user, :email => cookies[:email], :message => params[:message], :time_stamp => time_stamp}.to_json
     RedisClient.redis.zadd("room:default", time_stamp, message_json)
 
     render :nothing => true
@@ -26,7 +27,11 @@ class ChatController < ApplicationController
       []
     else
       delta = RedisClient.redis.zrangebyscore 'room:default', params[:last_sync].to_f + 0.01, '+inf' 
-      delta.map { |message_json| ActiveSupport::JSON.decode(message_json) }
+      delta.map do |message_json|
+        message_params = ActiveSupport::JSON.decode(message_json)
+        message_params["gravatar_url"] = gravatar_url(message_params["email"]) if message_params["email"]
+        message_params
+      end
     end
     
     render :json => {:time => Time.now.to_f * 1000, :delta => messages}
