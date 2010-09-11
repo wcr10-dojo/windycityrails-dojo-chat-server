@@ -14,7 +14,8 @@ group :bot do
   gem "httparty"
 end
 
-group :twitter_bot do 
-  gem "tweetstream"
-  gem "json"
-end
+#uncomment for twitter bot...weird
+#group :twitter_bot do 
+#  gem "tweetstream"
+#  gem "json"
+#end
