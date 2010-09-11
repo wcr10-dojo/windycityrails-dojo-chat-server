@@ -20,7 +20,7 @@ describe "chat interactions" do
 
     it "pushes & pulls a chat message" do 
       post "/chat/push", :message => "Hello"
-      get "/chat/pull/0"
+      get "/chat/pull/1"
       response.should contain("Hello")
     end
   end
