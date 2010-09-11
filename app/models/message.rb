@@ -12,6 +12,10 @@ class Message
       :email => email}.to_json
     RedisClient.redis.zadd("room:default", time_stamp, message_json)
   end
+  
+  def text
+    @message
+  end
 
   private
 
