@@ -2,6 +2,11 @@ class FakeRedis
   def initialize
     @data = {}
   end
+
+  def reset!
+    @data = {}
+  end
+
   def zadd(key, score, message)
     @data[key] = (@data[key] || [])
     @data[key] << [score, message]
