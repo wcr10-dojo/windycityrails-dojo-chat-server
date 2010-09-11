@@ -34,12 +34,15 @@ GEM
     builder (2.1.2)
     columnize (0.3.1)
     crack (0.1.8)
+    daemons (1.1.0)
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    eventmachine (0.12.10)
     httparty (0.4.5)
       crack (>= 0.1.1)
     i18n (0.4.1)
+    json (1.4.6)
     linecache (0.43)
     mail (2.2.5)
       activesupport (>= 2.3.6)
@@ -68,6 +71,7 @@ GEM
       thor (~> 0.14.0)
     rake (0.8.7)
     redis (2.0.5)
+    roauth (0.0.3)
     rspec (2.0.0.beta.20)
       rspec-core (= 2.0.0.beta.20)
       rspec-expectations (= 2.0.0.beta.20)
@@ -86,6 +90,12 @@ GEM
     thor (0.14.0)
     treetop (1.4.8)
       polyglot (>= 0.3.1)
+    tweetstream (1.0.4)
+      daemons
+      twitter-stream
+    twitter-stream (0.1.8)
+      eventmachine (>= 0.12.8)
+      roauth (>= 0.0.2)
     tzinfo (0.3.23)
     webrat (0.7.1)
       nokogiri (>= 1.2.0)
@@ -98,8 +108,10 @@ PLATFORMS
 DEPENDENCIES
   SystemTimer
   httparty
+  json
   rails (= 3.0.0)
   redis (= 2.0.5)
   rspec-rails (>= 2.0.0.beta.20)
   ruby-debug
+  tweetstream
   webrat (= 0.7.1)

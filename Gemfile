@@ -13,3 +13,8 @@ end
 group :bot do
   gem "httparty"
 end
+
+group :twitter_bot do 
+  gem "tweetstream"
+  gem "json"
+end
