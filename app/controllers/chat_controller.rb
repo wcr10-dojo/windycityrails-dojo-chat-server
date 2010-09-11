@@ -26,7 +26,7 @@ class ChatController < ApplicationController
       delta = RedisClient.redis.zrangebyscore 'room:default', params[:last_sync].to_f + 0.01, '+inf' 
       delta.map do |message_json|
         message_params = ActiveSupport::JSON.decode(message_json)
-        message_params["message"] = HTML::FullSanitizer.new.sanitize(message_params["message"])
+        message_params["message"] = Message.sanitize!(message_params["message"])
         message_params["gravatar_url"] = gravatar_url(message_params["email"]) if message_params["email"]
         message_params
       end

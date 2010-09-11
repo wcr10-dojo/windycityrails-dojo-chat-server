@@ -1,5 +1,9 @@
 class Message
 
+  def self.sanitize!(text)
+    HTML::WhiteListSanitizer.new.sanitize(text)
+  end
+
   def self.create!(user, email, params)
     new(user, email, params)
   end 
