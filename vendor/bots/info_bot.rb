@@ -11,49 +11,30 @@ class InfoBot < BotBase
     (Time.parse("2010-09-11 05:15:00PM")..Time.parse("2010-09-11 06:00:00PM")) => "What's New With Rails 3 with THE Yehuda Katz, Engine Yard"
   }
   
-  def self.talks
-    TALKS
-  end
-  
   def current_talk
-    self.class.talks.each do |talk|
-      return talk[1] if talk[0].include?(Time.now)
-    end
-    
-    nil
-  end
-  
-  def push_current_talk
-    talk = current_talk
-    
-    if talk
-      push(talk)
-    else
-      push("Looks like no talks are happening right now. Go talk to somebody!")
-      push("Or better yet, come over to the Obtiva Coding Dojo!")
-    end
+    TALKS.each_pair { |time_range, message|
+      return message if time_range === Time.now
+    }
+    "Looks like no talks are happening right now. Go talk to somebody!\n" +
+    "Or better yet, come over to the Obtiva Coding Dojo!"
   end
   
   def msg_for_infobot?(message)
     if message =~ /#{username}: current talk/
       puts "InfoBot triggered!"
-      return true
+      true
     else
       puts "InfoBot dormant"
+      false
     end
   end
   
-  def respond
-    new_messages = pull
-    new_messages.each do |message|
-      message_user = message["username"]
-      message_text = message["message"]
-      
-      puts "InfoBot got: #{message_text}"
-      if msg_for_infobot?(message_text)
-        push_current_talk
-      end
-      
+  def respond(message_user, message_text)
+    puts "InfoBot got: #{message_text}"
+    if msg_for_infobot?(message_text)
+      current_talk
+    else
+      nil
     end
   end
   

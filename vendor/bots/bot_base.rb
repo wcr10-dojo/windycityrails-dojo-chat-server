@@ -15,12 +15,16 @@ class BotBase
   
   def run
     while true
-      respond
+      new_messages = pull
+      new_messages.each do |message|
+        response = respond(message["username"], message["message"])
+        push(response) if response
+      end
       sleep 0.5
     end
   end
   
-  def respond
+  def respond(username, message)
     raise 'Please implement!'
   end
   

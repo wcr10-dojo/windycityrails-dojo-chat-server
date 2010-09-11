@@ -1,8 +1,17 @@
 class Message
+  def self.sanitize!(text)
+    HTML::WhiteListSanitizer.new.sanitize(text)
+  end
 
-  def self.create!(user, email, params)
-    new(user, email, params)
-  end 
+  class << self
+    def create!(user, email, params)
+      new(user, email, params)
+    end
+
+    def find_last
+      RedisClient.redis.zrevrange("room:default", 0, 1).first
+    end
+  end
 
   def initialize(user, email, message)
     message_json = {
