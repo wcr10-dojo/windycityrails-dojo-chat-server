@@ -74,3 +74,24 @@ div.sign_in_container h2 {
   text-align: center;
   padding-bottom: 15px;
 }
+
+blockquote {
+  margin: 0;
+  padding: 10px 10px 10px 80px;
+  font-size: 12px;
+  font-family: Helvetica, Arial, sans-serif;
+  line-height: 18px;
+  color: #333;
+  background: #eee;
+  position: relative;
+  min-height: 45px;
+}
+
+blockquote span.quote {
+  font-size: 130px;
+  color: #ddd;
+  position: absolute;
+  font-weight: bold;
+  top: 53px;
+  left: 10px;
+}

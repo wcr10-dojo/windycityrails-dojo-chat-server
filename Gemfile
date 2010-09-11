@@ -11,4 +11,5 @@ end
 
 group :bot do
   gem "httparty"
+  gem "nokogiri"
 end
