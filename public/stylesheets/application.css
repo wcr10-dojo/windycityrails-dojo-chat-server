@@ -90,6 +90,14 @@ div.chat_window .odd {
   background-color: #D5E1DD;
 }
 
+div.chat_window .me {
+  background-color: #FF9999;
+}
+
+div.chat_window .odd.me {
+  background-color: #DD7777;
+}
+
 div.chat_window .chat_message .identity {
   width: 42px;
   float: left;

@@ -15,7 +15,8 @@
     </div>
     <div class="chat_window">
       <% @recent_messages.each do |message| %>
-        <div class="chat_message clearfix <%= cycle('','odd') %>">
+		<% me = message["message"].match(cookies[:username]) ? 'me' : '' %>
+        <div class="chat_message clearfix <%= cycle('','odd') %> <%= me %>">
           <span class="identity">
             <%= image_tag gravatar_url(message["email"] || ""), :class => "gravatar" %>
           </span>
