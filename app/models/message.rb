@@ -1,11 +1,15 @@
 class Message
-  
-  def self.create!(user, params)
-    new(user, params)
+
+  def self.create!(user, email, params)
+    new(user, email, params)
   end 
 
-  def initialize(user, message)
-    message_json = {:username => user, :message => parse(message), :time_stamp => time_stamp}.to_json
+  def initialize(user, email, message)
+    message_json = {
+      :username => user,
+      :message => parse(message),
+      :time_stamp => time_stamp,
+      :email => email}.to_json
     RedisClient.redis.zadd("room:default", time_stamp, message_json)
   end
   
