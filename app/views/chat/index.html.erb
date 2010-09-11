@@ -1,6 +1,14 @@
 <div style="display:none" id="username"><b><%=cookies[:username]%></b> </div>
 <div style="display:none" id="last_sync"><%= Time.now.to_f * 1000 %></div>
 <div class="outer_container">
+
+  <p>Who's here?</p>
+
+  <% @users.each do |user| %>
+    <%= image_tag gravatar_url(user["email"]) %>
+    <%= user["name"] %>
+  <% end %>
+
   <div class="chat_container">
     <div class="chat_input_container">
       <p>Type your message below, then press Enter to send it.</p>
