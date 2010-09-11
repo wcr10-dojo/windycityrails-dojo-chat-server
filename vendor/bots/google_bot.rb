@@ -5,21 +5,11 @@ require File.expand_path("../bot_base", __FILE__)
 class GoogleBot < BotBase
   
   def respond(message_user, message_text)
-    if message_user == username
-      nil
-    else
-       message_text.downcase!
-      unless (message_text =~ /^search /).nil?
-        message_text.gsub!(/^search /,'')
-        puts %Q{Googling "#{message_text}" from #{message_user}}
-        url = lucky(message_text)
-        unless url.nil?
-          result = "<a href=\"#{url}\">#{url}</a>"
-        else
-          result = 'No result found'
-        end
-      end
-      result
+    message_text.downcase!
+    if message_user != username && message_text =~ /^search /
+      message_text.gsub!(/^search /,'')
+      url = lucky(message_text)
+      return (url ? "<a href=\"#{url}\">#{url}</a>" : 'No result found')
     end
   end
   
