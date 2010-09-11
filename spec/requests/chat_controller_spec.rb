@@ -33,6 +33,15 @@ describe "chat interactions" do
       json = ActiveSupport::JSON.decode(response.body)
       json["delta"].size.should == 2
     end
+
+    # Just do this here for now, since there are no view specs
+    # and no cucumber
+    it "sanitizes everything except images" do
+      post "/chat/push", :message => "<script>alert('leeeerrrrooooyyyy')</script>"
+      get "/"
+      response.body.should_not =~ /alert/
+    end
+
   end
 end
 
