@@ -20,11 +20,16 @@ class Message
 
   def initialize(user, email, message)
     @message = parse(message)
+    return false if message.blank?
+    now = Time.now
     message_json = {
       :username => user,
       :message => @message,
-      :time_stamp => time_stamp,
-      :email => email}.to_json
+      :time_stamp => time_stamp(now),
+      :email => email,
+      :posted_at => now.strftime("%H:%M:%S")
+      }.to_json
+      
     RedisClient.redis.zadd("room:default", time_stamp, message_json)
   end
   
@@ -37,9 +42,9 @@ class Message
   def parse(message)
     PROCESSORS.inject(message){|message, processor| "#{processor.capitalize}".constantize.process(message) || message }
   end
-
-  def time_stamp
-    Time.now.to_f * 1000
+  
+  def time_stamp(time = Time.now)
+    time.to_f * 1000
   end
 
 end

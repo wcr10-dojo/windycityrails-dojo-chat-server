@@ -6,12 +6,12 @@ class EchoBot < BotBase
     if message_user == username
       nil
     else
-      puts %Q{Echoing "#{message_text}" from #{message_user}}
+      Rails.logger.info %Q{Echoing "#{message_text}" from #{message_user}}
       message_text
     end
   end
 end
 
 if __FILE__ == $0
-  EchoBot.run!("Annoy-o-Tron-omatic")
+  EchoBot.run!("Annoy-o-Tron-omatic", :chat_server => "dojo-chat.local")
 end
