@@ -1,1 +1,2 @@
-rvm ree@wcr
+rvm use ree@wcr
+rvm default ree
