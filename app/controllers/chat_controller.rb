@@ -15,14 +15,7 @@ class ChatController < ApplicationController
 
   def push
     user = cookies[:username] || params[:username] || "Anon"
-    time_stamp = Time.now.to_f * 1000
-
-    message = params[:message]
-    message = %Q|<img src="#{params[:message]}" />| if message =~ /^http:\/\/.+\.(png|jpg|jpeg|gif)$/i
-
-    message_json = {:username => user, :message => message, :time_stamp => time_stamp, :email => cookies[:email]}.to_json
-    RedisClient.redis.zadd("room:default", time_stamp, message_json)
-
+    Message.create!(user, cookies[:email], params[:message])
     render :nothing => true
   end
 
@@ -46,4 +39,6 @@ class ChatController < ApplicationController
   def check_cookie
     redirect_to :action => :sign_in_form unless cookies[:username]
   end
+
+
 end
