@@ -15,7 +15,8 @@ class ChatController < ApplicationController
 
   def push
     user = cookies[:username] || params[:username] || "Anon"
-    Message.create!(user, cookies[:email], params[:message])
+    email = params[:email] || cookies[:email] || "none@none.com"
+    Message.create!(user, email, params[:message])
     render :nothing => true
   end
 
