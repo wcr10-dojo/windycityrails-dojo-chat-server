@@ -6,7 +6,7 @@ class EchoBot < BotBase
     if message_user == username
       nil
     else
-      puts %Q{Echoing "#{message_text}" from #{message_user}}
+      Rails.logger.info %Q{Echoing "#{message_text}" from #{message_user}}
       message_text
     end
   end

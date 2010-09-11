@@ -21,21 +21,27 @@ class InfoBot < BotBase
   
   def msg_for_infobot?(message)
     if message =~ /#{username}: current talk/
-      puts "InfoBot triggered!"
+      logger.info "InfoBot triggered!"
       true
     else
-      puts "InfoBot dormant"
+      logger.info "InfoBot dormant"
       false
     end
   end
   
   def respond(message_user, message_text)
-    puts "InfoBot got: #{message_text}"
+    logger.info "InfoBot got: #{message_text}"
     if msg_for_infobot?(message_text)
       current_talk
     else
       nil
     end
+  end
+
+  private
+
+  def logger
+    @logger ||= Rails.logger
   end
   
 end
