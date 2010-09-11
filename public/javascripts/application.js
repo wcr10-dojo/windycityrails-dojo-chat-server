@@ -25,6 +25,7 @@
         var message = this;
 		console.log(message);
         var chatMessage = "<img src=\"" + message["gravatar_url"] + "\" class=\"gravatar\" /><b>" + message["username"] + "</b> " + message["message"];
+
         var chatElement = $('<p>' + chatMessage + '</p>');
         if(! WCR.odd) {
           chatElement.addClass("odd");
