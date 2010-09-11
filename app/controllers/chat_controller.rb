@@ -3,7 +3,7 @@ class ChatController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => :push
 
   def index
-    @recent_messages = (RedisClient.redis.zrevrange("room:default", 0, 30) || []).map {|m| m.split('^')}
+    @recent_messages = (RedisClient.redis.zrevrange("room:default", 0, 30) || []).map { |message_json| ActiveSupport::JSON.decode(message_json) }
   end
 
   def sign_in

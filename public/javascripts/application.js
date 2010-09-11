@@ -1,7 +1,8 @@
 (function($) {
   WCR = {};
-
-  $(document).ready(function() {
+  
+ $(document).ready(function() {
+    WCR.odd = $('div.chat_window p:first').hasClass("odd");
     $('.chat_input_container input').keyup(function(e) {
        if (e.keyCode == 13) {
          $.post('/chat/push', {message: $(this).val()});
@@ -24,6 +25,13 @@
         var message = this;
         var chatMessage = "<b>" + message["username"] + "</b> " + message["message"];
         var chatElement = $('<p>' + chatMessage + '</p>');
+        if(! WCR.odd) {
+          chatElement.addClass("odd");
+          WCR.odd = true;
+        } else {
+          WCR.odd = false;
+        }
+          
         $('div.chat_window').prepend(chatElement);
       });
       setTimeout(poll, 500);

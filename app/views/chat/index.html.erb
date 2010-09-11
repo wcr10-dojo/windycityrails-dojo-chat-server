@@ -7,7 +7,8 @@
     </div>
     <div class="chat_window">
       <% @recent_messages.each do |message| %>
-        <p><b><%=message[0]%></b> <%=message[1]%></p>
+        <%p_clazz = cycle('', 'odd') %>
+        <p class="<%=p_clazz%>"><b><%=message["username"]%></b> <%=message["message"]%></p>
       <% end %>
     </div>
   </div>
