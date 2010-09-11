@@ -10,7 +10,7 @@
         <%p_clazz = cycle('', 'odd') %>
         <p class="<%=p_clazz%>">
 			<%= image_tag gravatar_url(message["email"] || ""), :class => "gravatar" %>
-      <b><%= message["username"]%></b> <%= sanitize message["message"], :tags => 'img'%>
+      <b><%= message["username"]%></b> <%= sanitize message["message"] %>
 		</p>
       <% end %>
     </div>
