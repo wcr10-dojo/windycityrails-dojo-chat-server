@@ -8,7 +8,20 @@
     <div class="chat_window">
       <% @recent_messages.each do |message| %>
         <%p_clazz = cycle('', 'odd') %>
-        <p class="<%=p_clazz%>"><b><%=message["username"]%></b> <%=message["message"]%></p>
+        <p class="<%=p_clazz%>">
+          <b><%=message["username"]%></b>
+          <% if message["message"].length <= 500 %>
+            <%= message['message'] %>
+          <% else %>
+            <%= message["message"][0..499] %>
+            <span class='extended'>
+              <a href='#' class='show_more'>more</a> 
+              <span class='message-extended' style='display:none'>
+                <%= message['message'][500..-1] %>
+              </span>
+            </span>
+          <% end %>
+        </p>
       <% end %>
     </div>
   </div>
