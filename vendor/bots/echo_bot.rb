@@ -13,5 +13,5 @@ class EchoBot < BotBase
 end
 
 if __FILE__ == $0
-  EchoBot.run!("Annoy-o-Tron-omatic")
+  EchoBot.run!("Annoy-o-Tron-omatic", :chat_server => "dojo-chat.local")
 end
