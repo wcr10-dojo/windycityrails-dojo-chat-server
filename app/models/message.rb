@@ -14,6 +14,7 @@ class Message
   end
 
   def initialize(user, email, message)
+    return false if message.blank?
     now = Time.now
     message_json = {
       :username => user,
