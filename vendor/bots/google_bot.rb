@@ -19,17 +19,12 @@ class GoogleBot
     message
   end
   
-  def post!(url)
-    Message.create!('Google Bot',"<a href=\"#{url}\">#{url}</a>")
-  end
-  
-  
   def run
     while true
       new_messages = pull
       new_messages.each do |message|
         message_user = message["username"]
-        message_text = message["message"]
+        message_text = message["message"].downcase
       
         next if message_user == username
         
@@ -76,5 +71,5 @@ class GoogleBot
 end
 
 if __FILE__ == $0
-  GoogleBot.run!("Google Bot", "dojo-chat.local")
+  GoogleBot.run!("Google Bot")
 end
