@@ -20,7 +20,7 @@
             <%= image_tag gravatar_url(message["email"] || ""), :class => "gravatar" %>
           </span>
           <span class="message">
-            <b class="username"><%= message["username"]%></b>
+            (<%= message["posted_at"] %>) <b class="username"><%= message["username"]%></b>
             <%= sanitize message["message"], :tags => 'img' %>
           </span>
         </div>
