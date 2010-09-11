@@ -47,7 +47,7 @@ class ChatController < ApplicationController
   private
 
   def track_user
-    active_users = ActiveSupport::JSON.decode(RedisClient.redis.get("room:default:active_users")) || []
+    active_users = ActiveSupport::JSON.decode(RedisClient.redis.get("room:default:active_users") || "") || []
     return if active_users.empty?
 
     active_users = active_users.select { |user| user["last_active"].to_f > 10.minutes.ago.to_f }
