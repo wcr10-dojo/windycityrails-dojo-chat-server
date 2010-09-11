@@ -1,49 +1,33 @@
 require File.expand_path('../../../config/boot', __FILE__)
+require File.join(File.dirname(__FILE__), 'bot_base')
 Bundler.require(:bot) if defined?(Bundler)
 
-class EchoBot
+class EchoBot < BotBase
   include HTTParty
   headers 'Accept' => '*/*'
   
   attr_accessor :username, :last_updated, :options
   
-  def initialize(username, options = {})
-    self.username = username
-    self.last_updated = 0
-    self.options = options
-  end
-  
-  def run
-    while true
-      new_messages = pull
-      new_messages.each do |message|
-        message_user = message["username"]
-        message_text = message["message"]
-        
-        next if message_user == username
-        
-        puts %Q{Echoing "#{message_text}" from #{message_user}}
-        push(message_text)
-      end
-      sleep 0.5
-    end
-  end
-  
-  def pull
-    payload = self.class.get("http://localhost:3000/chat/pull/#{last_updated}")
-    self.last_updated = payload["time"]
-    payload["delta"]
-  end
-  
-  def push(message)
-    push_attrs = {:username => username, :message => message}    
-    self.class.post("http://localhost:3000/chat/push", {:body => push_attrs})
+  def respond
+    new_messages = pull
+    new_messages.each do |message|
+      process_message message
+    end  
   end
   
   def self.run!(username, options = {})
     bot = self.new(username, options)
     bot.run
   end
+
+  def process_message message
+    message_user = message["username"]
+    message_text = message["message"]
+       
+    push(message_text) if message_user != username
+  end
+
+
 end
 
 if __FILE__ == $0
