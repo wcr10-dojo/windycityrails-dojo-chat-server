@@ -54,8 +54,13 @@ div.chat_window p {
   line-height: 1.7em;
 }
 
+
 div.chat_window p img {
   max-width: 90%;
+}
+div.chat_window p img.gravatar {
+	vertical-align: middle;
+	margin-right: 10px;
 }
 
 div.chat_window p.odd {
