@@ -1,12 +1,29 @@
 class Message
+  def self.sanitize!(text)
+    HTML::WhiteListSanitizer.new.sanitize(text)
+  end
 
-  def self.create!(user, params)
-    new(user, params)
-  end 
+  class << self
+    def create!(user, email, params)
+      new(user, email, params)
+    end
 
-  def initialize(user, message)
-    message_json = {:username => user, :message => parse(message), :time_stamp => time_stamp}.to_json
+    def find_last
+      RedisClient.redis.zrevrange("room:default", 0, 1).first
+    end
+  end
+
+  def initialize(user, email, message)
+    message_json = {
+      :username => user,
+      :message => parse(message),
+      :time_stamp => time_stamp,
+      :email => email}.to_json
     RedisClient.redis.zadd("room:default", time_stamp, message_json)
+  end
+  
+  def text
+    @message
   end
 
   private
